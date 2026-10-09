@@ -1,0 +1,20 @@
+[project]
+name = "meridian-trader"
+version = "0.1.0"
+description = "Market-regime research with leakage-safe walk-forward validation"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N", "SIM", "NPY", "PD"]
+ignore = ["PD901", "N803", "N806"]
