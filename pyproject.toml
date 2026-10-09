@@ -17,4 +17,4 @@ extend-exclude = [".venv"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "N", "SIM", "NPY", "PD"]
-ignore = ["PD901", "N803", "N806"]
+ignore = ["N803", "N806"]
