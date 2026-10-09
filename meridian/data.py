@@ -19,7 +19,8 @@ import requests
 
 FRED_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv"
 DEFAULT_SERIES = ["SP500", "VIXCLS", "DGS10", "DGS2"]
-CACHE_DIR = Path(os.environ.get("MERIDIAN_CACHE_DIR", "data/cache"))
+ROOT = Path(__file__).resolve().parent.parent
+CACHE_DIR = Path(os.environ.get("MERIDIAN_CACHE_DIR", ROOT / "data" / "cache"))
 # Short publication gaps in rate/vol series (holidays differ across series) are carried forward;
 # a gap longer than this many business days is left missing rather than invented.
 MAX_FFILL = 5
@@ -31,7 +32,7 @@ def parse_fred_csv(text: str, series_id: str) -> pd.Series:
     date_col = df.columns[0]
     s = pd.Series(
         pd.to_numeric(df[series_id], errors="coerce").to_numpy(dtype=float),
-        index=pd.to_datetime(df[date_col]),
+        index=pd.DatetimeIndex(pd.to_datetime(df[date_col]), name="date"),
         name=series_id,
     )
     return s.sort_index()

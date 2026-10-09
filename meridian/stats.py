@@ -120,7 +120,11 @@ def cost_sensitivity(
     return out
 
 
-def ljung_box_pvalue(x: np.ndarray | pd.Series, lags: int = 10) -> float:
-    """p-value of the Ljung-Box test for serial correlation (small = dependence is present)."""
+def ljung_box(x: np.ndarray | pd.Series, lags: int = 10) -> tuple[float, float]:
+    """Ljung-Box serial-correlation test -> (Q statistic, p-value); small p = dependence."""
     res = acorr_ljungbox(np.asarray(x, dtype=float), lags=[lags], return_df=True)
-    return float(res["lb_pvalue"].iloc[0])
+    return float(res["lb_stat"].iloc[0]), float(res["lb_pvalue"].iloc[0])
+
+
+def ljung_box_pvalue(x: np.ndarray | pd.Series, lags: int = 10) -> float:
+    return ljung_box(x, lags)[1]

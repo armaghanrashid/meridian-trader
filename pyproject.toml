@@ -13,8 +13,12 @@ filterwarnings = ["ignore::DeprecationWarning"]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-extend-exclude = [".venv"]
+extend-exclude = [".venv", "*.ipynb"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "N", "SIM", "NPY", "PD"]
 ignore = ["N803", "N806"]
+
+[tool.ruff.lint.per-file-ignores]
+"meridian/report.py" = ["E501"]  # generated prose
+"notebooks/build_notebook.py" = ["E501"]  # notebook source strings
